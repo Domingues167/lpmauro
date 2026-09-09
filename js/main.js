@@ -402,8 +402,10 @@ function initVideoModal() {
       modalTitle.textContent = title || 'Depoimento de Sucesso';
     }
 
-    // Check if it's an external URL / iframe or a local HTML5 video
-    if (src.startsWith('http') || src.includes('pandavideo')) {
+    // Check if it's an external embed iframe (YouTube, Vimeo, Panda) or a direct video file (.mp4, .mov)
+    const isEmbedIframe = src.includes('pandavideo') || src.includes('youtube.com') || src.includes('youtu.be') || src.includes('vimeo.com');
+
+    if (isEmbedIframe) {
       if (modalVideoPlayer) {
         modalVideoPlayer.pause();
         modalVideoPlayer.style.display = 'none';
@@ -414,7 +416,7 @@ function initVideoModal() {
         modalVideoIframe.src = src.includes('autoplay') ? src : `${src}&autoplay=true`;
       }
     } else {
-      // Local video (.mp4 or .mov)
+      // Direct video (.mp4 or .mov from local disk or CDN)
       if (modalVideoIframe) {
         modalVideoIframe.style.display = 'none';
         modalVideoIframe.src = '';
