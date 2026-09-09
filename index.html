@@ -26,7 +26,7 @@
 
   <!-- Top Announcement Bar -->
   <header class="top-bar" role="banner">
-    <p><strong>Exclusivo</strong> para Agências de Viagens e Consultores de Turismo que faturam acima de R$ 20 mil</p>
+    <p><strong>Exclusivo</strong> para agências de viagens que faturam acima de 100 mil por mês</p>
   </header>
 
   <main>
@@ -44,28 +44,28 @@
                 <path d="M22 2L11 13"></path>
                 <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
               </svg>
-              <span>MÉTODO DE ESCALA PARA TURISMO</span>
+              <span>Sistema de Captação Automática ™️</span>
             </div>
           </div>
 
           <!-- Headline -->
           <h1 class="headline">
-            Receba um <span class="highlight">Plano Estratégico</span> para atrair viajantes qualificados, eliminar curiosos de cotação e escalar sua agência nos <span class="highlight">próximos 90 dias</span>
+            Receba um <span class="highlight">plano de ação</span> para atrair viajantes compradores, vender viagens de ticket alto e escalar os resultados da sua agência nos <span class="highlight">próximos 90 dias!</span>
           </h1>
 
           <!-- Subheadline -->
           <p class="subheadline">
-            Mais de 180 agências de viagens e consultorias de turismo utilizam este método para fechar pacotes de alto valor todos os meses com previsibilidade e vendas ativas.
+            Mais de 400 agências em 22 estados do país utilizam o Sistema de Captação Automática para vender todos os dias sem depender de indicação.
           </p>
 
           <!-- Social Proof Grid -->
           <div class="social-proof-wrapper">
-            <div class="social-proof-tag">Agências que já escalaram conosco</div>
+            <div class="social-proof-tag">Grandes agências que escalaram com o método</div>
             <div class="client-logos-grid">
-              <div class="client-badge"><span>PRIME TRAVEL</span></div>
-              <div class="client-badge"><span>HORIZONTE VIAGENS</span></div>
-              <div class="client-badge"><span>DESTINO VIP TOUR</span></div>
-              <div class="client-badge"><span>ROTA MUNDI</span></div>
+              <div class="client-badge"><span>CVC</span></div>
+              <div class="client-badge"><span>AZUL VIAGENS</span></div>
+              <div class="client-badge"><span>FLYWORLD</span></div>
+              <div class="client-badge"><span>BEFLY TRAVEL</span></div>
             </div>
           </div>
         </div>
@@ -74,8 +74,8 @@
         <div class="hero-form-column">
           <div class="form-card">
             <div class="form-header">
-              <h3>Solicitar Plano Estratégico</h3>
-              <p>Preencha os dados abaixo para receber um diagnóstico e plano de ação para sua agência.</p>
+              <h3>Solicitar Plano de Ação</h3>
+              <p>Preencha os dados abaixo para receber o plano de ação e diagnóstico para sua agência.</p>
             </div>
 
             <form id="strategicLeadForm" class="strategic-form" novalidate>
@@ -92,11 +92,6 @@
                 <input type="text" id="nameInput" name="name" class="form-input" placeholder="SEU NOME COMPLETO" required>
               </div>
 
-              <!-- Corporate Email Field -->
-              <div class="form-group">
-                <input type="email" id="emailInput" name="email" class="form-input" placeholder="SEU MELHOR E-MAIL" required>
-              </div>
-
               <!-- WhatsApp Phone Field -->
               <div class="form-group">
                 <div class="phone-input-wrapper">
@@ -108,28 +103,22 @@
                 </div>
               </div>
 
-              <!-- Company Name Field -->
-              <div class="form-group">
-                <input type="text" id="empresaInput" name="empresa" class="form-input" placeholder="NOME DA SUA AGÊNCIA DE VIAGENS" required>
-              </div>
-
               <!-- Instagram Field -->
               <div class="form-group">
-                <input type="text" id="instagramInput" name="instagram" class="form-input" placeholder="INSTAGRAM DA AGÊNCIA (EX: @SUAAGENCIA)">
+                <input type="text" id="instagramInput" name="instagram" class="form-input" placeholder="INSTAGRAM DA AGÊNCIA (EX: @SUAAGENCIA)" required>
               </div>
 
-              <!-- Paid Media Investment Select -->
+              <!-- Monthly Revenue Select -->
               <div class="form-group">
-                <label for="investimentoSelect" class="form-label">Quanto você investe ou pretende investir por mês em anúncios?</label>
+                <label for="faturamentoSelect" class="form-label">Faturamento atual da agência</label>
                 <div class="select-wrapper">
-                  <select id="investimentoSelect" name="investimento" class="form-select" required>
-                    <option value="" disabled selected>Selecione o valor de investimento mensal</option>
-                    <option value="Ainda não invisto (apenas indicações)">Ainda não invisto (apenas indicações)</option>
-                    <option value="Até R$ 1.500 por mês">Até R$ 1.500 por mês</option>
-                    <option value="R$ 1.500 a R$ 3.000 por mês">R$ 1.500 a R$ 3.000 por mês</option>
-                    <option value="R$ 3.000 a R$ 5.000 por mês">R$ 3.000 a R$ 5.000 por mês</option>
-                    <option value="R$ 5.000 a R$ 10.000 por mês">R$ 5.000 a R$ 10.000 por mês</option>
-                    <option value="Acima de R$ 10.000 por mês">Acima de R$ 10.000 por mês</option>
+                  <select id="faturamentoSelect" name="faturamento" class="form-select" required>
+                    <option value="" disabled selected>Selecione a faixa de faturamento</option>
+                    <option value="Até R$ 50 mil por mês">Até R$ 50 mil por mês</option>
+                    <option value="R$ 50 mil a R$ 100 mil por mês">R$ 50 mil a R$ 100 mil por mês</option>
+                    <option value="R$ 100 mil a R$ 250 mil por mês">R$ 100 mil a R$ 250 mil por mês</option>
+                    <option value="R$ 250 mil a R$ 500 mil por mês">R$ 250 mil a R$ 500 mil por mês</option>
+                    <option value="Acima de R$ 500 mil por mês">Acima de R$ 500 mil por mês</option>
                   </select>
                   <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -137,18 +126,17 @@
                 </div>
               </div>
 
-              <!-- Monthly Revenue Select -->
+              <!-- Sales Reps Select -->
               <div class="form-group">
-                <label for="faturamentoSelect" class="form-label">Faturamento mensal médio da agência</label>
+                <label for="vendedoresSelect" class="form-label">Quantos vendedores tem na sua equipe?</label>
                 <div class="select-wrapper">
-                  <select id="faturamentoSelect" name="faturamento" class="form-select" required>
-                    <option value="" disabled selected>Selecione a faixa de faturamento</option>
-                    <option value="Abaixo de R$10 mil">Abaixo de R$10 mil</option>
-                    <option value="R$10 mil a R$20 mil">R$10 mil a R$20 mil</option>
-                    <option value="R$20 mil a R$ 50 mil">R$20 mil a R$ 50 mil</option>
-                    <option value="R$50 mil a R$100 mil">R$50 mil a R$100 mil</option>
-                    <option value="R$100 mil a R$500 mil">R$100 mil a R$500 mil</option>
-                    <option value="Acima de R$500 mil">Acima de R$500 mil</option>
+                  <select id="vendedoresSelect" name="vendedores" class="form-select" required>
+                    <option value="" disabled selected>Selecione a quantidade de vendedores</option>
+                    <option value="Apenas eu (sem equipe de vendas)">Apenas eu (sem equipe de vendas)</option>
+                    <option value="1 a 2 vendedores">1 a 2 vendedores</option>
+                    <option value="3 a 5 vendedores">3 a 5 vendedores</option>
+                    <option value="6 a 10 vendedores">6 a 10 vendedores</option>
+                    <option value="Mais de 10 vendedores">Mais de 10 vendedores</option>
                   </select>
                   <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -184,8 +172,8 @@
     <section class="cases-section" id="cases">
       <div class="cases-container">
         <div class="cases-header">
-          <span class="section-tag">Depoimentos & Resultados</span>
-          <h2 class="section-title">Agências de Viagens que <span>escalaram</span> com nosso método</h2>
+          <span class="section-tag">Quem executou o método e teve resultado recomenda! ⬇️</span>
+          <h2 class="section-title">Agências que <span>escalaram</span> seguindo o nosso método comercial</h2>
         </div>
 
         <div class="cases-carousel-wrapper">
@@ -198,8 +186,8 @@
 
           <!-- Straight Line Carousel Track -->
           <div class="cases-carousel-track" id="casesTrack">
-            <!-- Case 1 -->
-            <article class="case-card" data-video-src="01 (1).mp4" data-video-title="Agência de Viagens - Case 01">
+            <!-- Case 1: CVC -->
+            <article class="case-card" data-video-src="01 (1).mp4" data-video-title="CVC - Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="01%20(1).mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -209,13 +197,13 @@
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Agência de Viagens</h3>
+                <h3 class="case-company">CVC</h3>
                 <p class="case-desc">Escala de vendas e novos viajantes qualificados</p>
               </div>
             </article>
 
-            <!-- Case 2 -->
-            <article class="case-card" data-video-src="03.mp4" data-video-title="Consultoria de Turismo - Case 02">
+            <!-- Case 2: Azul Viagens -->
+            <article class="case-card" data-video-src="03.mp4" data-video-title="Azul Viagens - Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="03.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -225,13 +213,13 @@
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Consultoria de Turismo</h3>
+                <h3 class="case-company">Azul Viagens</h3>
                 <p class="case-desc">Previsibilidade e fechamento de roteiros internacionais</p>
               </div>
             </article>
 
-            <!-- Case 3: Miriam -->
-            <article class="case-card" data-video-src="04 - Miriam.mp4" data-video-title="Miriam - Agência de Viagens">
+            <!-- Case 3: MF Viagens -->
+            <article class="case-card" data-video-src="04 - Miriam.mp4" data-video-title="MF Viagens - Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="04%20-%20Miriam.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -241,13 +229,13 @@
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Miriam Viagens</h3>
+                <h3 class="case-company">MF Viagens</h3>
                 <p class="case-desc">Fim dos curiosos e fechamento de pacotes no WhatsApp</p>
               </div>
             </article>
 
-            <!-- Case 4 -->
-            <article class="case-card" data-video-src="05.mp4" data-video-title="Agência Especializada - Case 04">
+            <!-- Case 4: FlyWorld -->
+            <article class="case-card" data-video-src="05.mp4" data-video-title="FlyWorld - Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="05.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -257,13 +245,13 @@
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Agência Especializada</h3>
+                <h3 class="case-company">FlyWorld</h3>
                 <p class="case-desc">Atração de viajantes de alto poder aquisitivo</p>
               </div>
             </article>
 
-            <!-- Case 5 -->
-            <article class="case-card" data-video-src="07.mp4" data-video-title="Roteiros Nacionais & Internacionais - Case 05">
+            <!-- Case 5: Befly Travel -->
+            <article class="case-card" data-video-src="07.mp4" data-video-title="Befly Travel - Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="07.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -273,13 +261,13 @@
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Roteiros & Destinos</h3>
+                <h3 class="case-company">Befly Travel</h3>
                 <p class="case-desc">Crescimento contínuo em pacotes completos em família</p>
               </div>
             </article>
 
-            <!-- Case 6: Michelle -->
-            <article class="case-card" data-video-src="09 - Michelle.mp4" data-video-title="Michelle - Agência de Viagens">
+            <!-- Case 6: Michelle Turismo -->
+            <article class="case-card" data-video-src="09 - Michelle.mp4" data-video-title="Michelle Turismo - Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="09%20-%20Michelle.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -289,13 +277,13 @@
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Michelle Viagens</h3>
-                <p class="case-desc">Vendas constantes de pacotes e viagens personalizadas</p>
+                <h3 class="case-company">Michelle Turismo</h3>
+                <p class="case-desc">Vendas constantes de pacotes e viagens de ticket alto</p>
               </div>
             </article>
 
-            <!-- Case 7: Vayu -->
-            <article class="case-card" data-video-src="10 - Vayu.mp4" data-video-title="Vayu Viagens & Experiências">
+            <!-- Case 7: Vayu Viagens -->
+            <article class="case-card" data-video-src="10 - Vayu.mp4" data-video-title="Vayu Viagens - Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="10%20-%20Vayu.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -310,8 +298,8 @@
               </div>
             </article>
 
-            <!-- Case 8 -->
-            <article class="case-card" data-video-src="11.mp4" data-video-title="Escala Previsível - Case 08">
+            <!-- Case 8: Hadassa Turismo -->
+            <article class="case-card" data-video-src="11.mp4" data-video-title="Hadassa Turismo - Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="11.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -321,8 +309,8 @@
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Escala Previsível</h3>
-                <p class="case-desc">Aceleração de faturamento com campanhas validadas</p>
+                <h3 class="case-company">Hadassa Turismo</h3>
+                <p class="case-desc">Aceleração de faturamento com captação automática</p>
               </div>
             </article>
           </div>

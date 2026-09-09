@@ -128,22 +128,19 @@ const TARGET_WHATSAPP_NUMBER = '5511966097451';
 
 function formatWhatsAppMessage(data) {
   const name = (data.name || '').trim() || 'Cliente';
-  const empresa = (data.empresa || '').trim() || 'minha agência';
-  const investimento = data.investimento || 'Não informado';
-  const faturamento = data.faturamento || 'Não informado';
-  const instagram = (data.instagram || '').trim() || 'Não informado';
-  const email = (data.email || '').trim() || 'Não informado';
   const whatsapp = (data.whatsapp || '').trim() || 'Não informado';
+  const instagram = (data.instagram || '').trim() || 'Não informado';
+  const faturamento = data.faturamento || 'Não informado';
+  const vendedores = data.vendedores || 'Não informado';
 
-  return `Olá! Sou o(a) *${name}*, da agência *${empresa}*. Preenchi o formulário no site para receber o Plano Estratégico.
+  return `Olá! Sou o(a) *${name}*. Preenchi o formulário no site para receber o plano de ação do *Sistema de Captação Automática ™️*.
 
-• Investimento em anúncios: *${investimento}*
-• Faturamento mensal da agência: *${faturamento}*
-• Instagram: *${instagram}*
-• E-mail: *${email}*
+• Instagram da agência: *${instagram}*
+• Faturamento atual: *${faturamento}*
+• Quantos vendedores: *${vendedores}*
 • WhatsApp de contato: *${whatsapp}*
 
-Gostaria de receber o diagnóstico e o plano estratégico para acelerar as vendas da minha agência de viagens!`;
+Gostaria de receber meu plano de ação para atrair viajantes compradores, vender viagens de ticket alto e escalar os resultados da minha agência!`;
 }
 
 function initFormHandler() {
@@ -156,12 +153,13 @@ function initFormHandler() {
 
     // Basic Validation
     const name = form.querySelector('[name="name"]')?.value.trim();
-    const email = form.querySelector('[name="email"]')?.value.trim();
     const whatsapp = form.querySelector('[name="whatsapp"]')?.value.trim();
+    const instagram = form.querySelector('[name="instagram"]')?.value.trim();
     const faturamento = form.querySelector('[name="faturamento"]')?.value;
+    const vendedores = form.querySelector('[name="vendedores"]')?.value;
 
-    if (!name || !email || !whatsapp || !faturamento) {
-      alert('Por favor, preencha todos os campos obrigatórios para receber o plano.');
+    if (!name || !whatsapp || !instagram || !faturamento || !vendedores) {
+      alert('Por favor, preencha todos os campos para receber seu plano de ação.');
       return;
     }
 
@@ -185,7 +183,7 @@ function initFormHandler() {
     // Store lead locally for reference on thank you pages
     try {
       sessionStorage.setItem('lead_name', name);
-      sessionStorage.setItem('lead_company', leadPayload['empresa'] || '');
+      sessionStorage.setItem('lead_instagram', instagram);
       sessionStorage.setItem('lead_faturamento', faturamento);
       sessionStorage.setItem('whatsapp_url', whatsappUrl);
       sessionStorage.setItem('whatsapp_message', message);
