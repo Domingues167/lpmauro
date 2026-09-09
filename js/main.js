@@ -210,7 +210,7 @@ function initCasesCarousel() {
   const prevBtn = document.getElementById('carouselPrevBtn');
   const nextBtn = document.getElementById('carouselNextBtn');
   const dotsContainer = document.getElementById('carouselDots');
-  const cards = track ? track.querySelectorAll('.case-card') : [];
+  const cards = track ? Array.from(track.querySelectorAll('.case-card')) : [];
 
   if (!track || cards.length === 0) return;
 
@@ -229,6 +229,51 @@ function initCasesCarousel() {
     if (vid.readyState >= 1) setTime();
   });
 
+  // Calculate active index based on card positions relative to track
+  function getActiveIndex() {
+    const trackRect = track.getBoundingClientRect();
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    cards.forEach((card, idx) => {
+      const cardRect = card.getBoundingClientRect();
+      const diff = Math.abs(cardRect.left - trackRect.left);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+    return closestIndex;
+  }
+
+  // Smooth scroll directly to target card index
+  function scrollToCard(index) {
+    if (index < 0) index = cards.length - 1;
+    if (index >= cards.length) index = 0;
+
+    const targetCard = cards[index];
+    if (!targetCard) return;
+
+    const trackRect = track.getBoundingClientRect();
+    const cardRect = targetCard.getBoundingClientRect();
+    const targetScrollLeft = track.scrollLeft + (cardRect.left - trackRect.left);
+
+    track.scrollTo({
+      left: Math.max(0, targetScrollLeft),
+      behavior: 'smooth'
+    });
+
+    updateActiveDot(index);
+  }
+
+  function updateActiveDot(forcedIndex) {
+    if (!dotsContainer) return;
+    const activeIndex = forcedIndex !== undefined ? forcedIndex : getActiveIndex();
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === activeIndex);
+    });
+  }
+
   // Render Indicator Dots
   if (dotsContainer) {
     dotsContainer.innerHTML = '';
@@ -237,123 +282,109 @@ function initCasesCarousel() {
       dot.type = 'button';
       dot.className = `carousel-dot ${idx === 0 ? 'active' : ''}`;
       dot.setAttribute('aria-label', `Ir para o depoimento ${idx + 1}`);
-      dot.addEventListener('click', () => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        pauseAutoplay();
         scrollToCard(idx);
       });
       dotsContainer.appendChild(dot);
     });
   }
 
-  function getCardWidth() {
-    const firstCard = cards[0];
-    if (!firstCard) return 302;
-    const style = window.getComputedStyle(track);
-    const gap = parseFloat(style.gap) || 22;
-    return firstCard.offsetWidth + gap;
-  }
-
-  function scrollToCard(index) {
-    const cardWidth = getCardWidth();
-    track.scrollTo({
-      left: index * cardWidth,
-      behavior: 'smooth'
-    });
-  }
-
-  function updateActiveDot() {
-    if (!dotsContainer) return;
-    const cardWidth = getCardWidth();
-    const activeIndex = Math.round(track.scrollLeft / cardWidth);
-    const dots = dotsContainer.querySelectorAll('.carousel-dot');
-    dots.forEach((dot, idx) => {
-      dot.classList.toggle('active', idx === activeIndex);
-    });
-  }
-
   track.addEventListener('scroll', () => {
-    window.requestAnimationFrame(updateActiveDot);
+    window.requestAnimationFrame(() => updateActiveDot());
   }, { passive: true });
 
-  // Navigation Arrows
+  // Navigation Arrows (Next & Prev)
   if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      const cardWidth = getCardWidth();
-      if (track.scrollLeft <= 15) {
-        track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
-      } else {
-        track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-      }
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pauseAutoplay();
+      const current = getActiveIndex();
+      const prev = current > 0 ? current - 1 : cards.length - 1;
+      scrollToCard(prev);
     });
   }
 
   if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      const cardWidth = getCardWidth();
-      const maxScroll = track.scrollWidth - track.clientWidth - 20;
-      if (track.scrollLeft >= maxScroll) {
-        track.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        track.scrollBy({ left: cardWidth, behavior: 'smooth' });
-      }
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pauseAutoplay();
+      const current = getActiveIndex();
+      const next = current < cards.length - 1 ? current + 1 : 0;
+      scrollToCard(next);
     });
   }
 
-  // Mouse Drag to Scroll with Click Distinction
+  // Mouse Drag to Scroll with Safe Click Distinction
   let isDown = false;
   let startX = 0;
   let scrollStart = 0;
   let hasDragged = false;
+  let dragDistance = 0;
 
   track.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.carousel-nav-btn')) return;
     isDown = true;
     hasDragged = false;
-    track.classList.add('grabbing');
-    startX = e.pageX - track.offsetLeft;
+    dragDistance = 0;
+    startX = e.pageX;
     scrollStart = track.scrollLeft;
+    track.classList.add('grabbing');
+    pauseAutoplay();
   });
 
   window.addEventListener('mouseup', () => {
     if (isDown) {
       isDown = false;
       track.classList.remove('grabbing');
+      if (dragDistance > 20) {
+        hasDragged = true;
+        setTimeout(() => {
+          scrollToCard(getActiveIndex());
+        }, 40);
+      }
+      setTimeout(() => {
+        hasDragged = false;
+        dragDistance = 0;
+      }, 150);
     }
   });
 
   track.addEventListener('mousemove', (e) => {
     if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - track.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    if (Math.abs(walk) > 6) {
-      hasDragged = true;
+    const diff = e.pageX - startX;
+    dragDistance = Math.abs(diff);
+    if (dragDistance > 8) {
+      e.preventDefault();
+      track.scrollLeft = scrollStart - diff;
     }
-    track.scrollLeft = scrollStart - walk;
   });
 
-  // Prevent card click to open video modal if it was a drag gesture
+  // Prevent card click only if user actually performed a significant drag
   cards.forEach(card => {
     card.addEventListener('click', (e) => {
-      if (hasDragged) {
+      if (hasDragged || dragDistance > 15) {
+        e.preventDefault();
         e.stopImmediatePropagation();
-        hasDragged = false;
+        return;
       }
     }, true);
   });
 
-  // Autoplay loop (slides cards forward automatically like a carousel)
+  // Autoplay loop (slides cards forward automatically)
   let autoplayInterval = null;
   function startAutoplay() {
     if (autoplayInterval) clearInterval(autoplayInterval);
     autoplayInterval = setInterval(() => {
       if (isCarouselPaused) return;
-      const cardWidth = getCardWidth();
-      const maxScroll = track.scrollWidth - track.clientWidth - 20;
-      if (track.scrollLeft >= maxScroll) {
-        track.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        track.scrollBy({ left: cardWidth, behavior: 'smooth' });
-      }
-    }, 3600);
+      const current = getActiveIndex();
+      const next = current < cards.length - 1 ? current + 1 : 0;
+      scrollToCard(next);
+    }, 3800);
   }
 
   function pauseAutoplay() {
@@ -361,7 +392,10 @@ function initCasesCarousel() {
   }
 
   function resumeAutoplay() {
-    isCarouselPaused = false;
+    const modal = document.getElementById('videoModal');
+    if (!modal || !modal.classList.contains('active')) {
+      isCarouselPaused = false;
+    }
   }
 
   track.addEventListener('mouseenter', pauseAutoplay);
@@ -377,6 +411,21 @@ function initCasesCarousel() {
     nextBtn.addEventListener('mouseenter', pauseAutoplay);
     nextBtn.addEventListener('mouseleave', resumeAutoplay);
   }
+
+  // Smooth scroll for bottom CTA button ("QUERO RECEBER MEU PLANO") and any #forms anchor
+  document.querySelectorAll('a[href="#forms"], .btn-cases-cta').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const formSection = document.getElementById('forms');
+      if (formSection) {
+        formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const nameInput = document.getElementById('nameInput');
+        if (nameInput) {
+          setTimeout(() => nameInput.focus(), 650);
+        }
+      }
+    });
+  });
 
   startAutoplay();
 }
