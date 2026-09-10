@@ -18,9 +18,9 @@
   --topbar-bg: #0055D4;
   --topbar-text: #FFFFFF;
 
-  --text-main: #ECECEC;
-  --text-muted: #A0A0A5;
-  --text-dim: #71717A;
+  --text-main: #FFFFFF;
+  --text-muted: #FFFFFF;
+  --text-dim: #FFFFFF;
   --text-white: #FFFFFF;
 
   --border-subtle: rgba(255, 255, 255, 0.1);
@@ -172,7 +172,7 @@ a {
 }
 
 .brand-logo-img {
-  max-width: 220px;
+  max-width: 140px;
   width: 100%;
   height: auto;
   display: block;
@@ -207,10 +207,15 @@ a {
 }
 
 .highlight {
-  color: var(--accent-primary);
-  position: relative;
-  display: inline-block;
-}
+    color: #FFFFFF;
+    position: relative;
+    display: inline-block;
+    font-weight: 800;
+    text-shadow: 0 0 25px rgba(0, 102, 255, 0.5);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-primary);
+    text-underline-offset: 4px;
+  }
 
 .subheadline {
   font-size: 1.125rem;
@@ -222,8 +227,9 @@ a {
 
 /* Social Proof Badges */
 .social-proof-wrapper {
-  margin-top: 12px;
-  padding-top: 24px;
+  margin-top: 18px;
+  margin-bottom: 20px;
+  padding-top: 18px;
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -277,7 +283,7 @@ a {
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: #C0C0C6;
+  color: #FFFFFF;
   text-transform: uppercase;
   text-align: center;
 }
@@ -347,7 +353,7 @@ a {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #D1D1D6;
+  color: #FFFFFF;
 }
 
 .form-input,
@@ -577,16 +583,16 @@ a {
 
 .section-tag {
   display: inline-block;
-  background: var(--accent-subtle);
-  color: var(--accent-primary);
-  border: 1px solid rgba(0, 102, 255, 0.25);
-  padding: 6px 18px;
-  border-radius: var(--radius-full);
   font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  color: #FFFFFF;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  letter-spacing: 0.06em;
+  background: rgba(0, 102, 255, 0.25);
+  border: 1px solid rgba(0, 102, 255, 0.6);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
 }
 
 .section-title {
@@ -597,7 +603,9 @@ a {
 }
 
 .section-title span {
-  color: var(--accent-primary);
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-primary);
 }
 
 /* Straight-line Carousel Styles */
@@ -838,9 +846,10 @@ a {
 }
 
 .case-desc {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  font-weight: 500;
+  font-size: 0.95rem;
+  color: #FFFFFF;
+  font-weight: 600;
+  line-height: 1.45;
 }
 
 /* Call to action at bottom of cases */

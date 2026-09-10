@@ -41,9 +41,9 @@
   --topbar-bg: #0055D4;
   --topbar-text: #FFFFFF;
 
-  --text-main: #ECECEC;
-  --text-muted: #A0A0A5;
-  --text-dim: #71717A;
+  --text-main: #FFFFFF;
+  --text-muted: #FFFFFF;
+  --text-dim: #FFFFFF;
   --text-white: #FFFFFF;
 
   --border-subtle: rgba(255, 255, 255, 0.1);
@@ -195,7 +195,7 @@ a {
 }
 
 .brand-logo-img {
-  max-width: 220px;
+  max-width: 140px;
   width: 100%;
   height: auto;
   display: block;
@@ -230,10 +230,15 @@ a {
 }
 
 .highlight {
-  color: var(--accent-primary);
-  position: relative;
-  display: inline-block;
-}
+    color: #FFFFFF;
+    position: relative;
+    display: inline-block;
+    font-weight: 800;
+    text-shadow: 0 0 25px rgba(0, 102, 255, 0.5);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-primary);
+    text-underline-offset: 4px;
+  }
 
 .subheadline {
   font-size: 1.125rem;
@@ -245,8 +250,9 @@ a {
 
 /* Social Proof Badges */
 .social-proof-wrapper {
-  margin-top: 12px;
-  padding-top: 24px;
+  margin-top: 18px;
+  margin-bottom: 20px;
+  padding-top: 18px;
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -300,7 +306,7 @@ a {
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: #C0C0C6;
+  color: #FFFFFF;
   text-transform: uppercase;
   text-align: center;
 }
@@ -370,7 +376,7 @@ a {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #D1D1D6;
+  color: #FFFFFF;
 }
 
 .form-input,
@@ -600,16 +606,16 @@ a {
 
 .section-tag {
   display: inline-block;
-  background: var(--accent-subtle);
-  color: var(--accent-primary);
-  border: 1px solid rgba(0, 102, 255, 0.25);
-  padding: 6px 18px;
-  border-radius: var(--radius-full);
   font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  color: #FFFFFF;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  letter-spacing: 0.06em;
+  background: rgba(0, 102, 255, 0.25);
+  border: 1px solid rgba(0, 102, 255, 0.6);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
 }
 
 .section-title {
@@ -620,7 +626,9 @@ a {
 }
 
 .section-title span {
-  color: var(--accent-primary);
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-primary);
 }
 
 /* Straight-line Carousel Styles */
@@ -861,9 +869,10 @@ a {
 }
 
 .case-desc {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  font-weight: 500;
+  font-size: 0.95rem;
+  color: #FFFFFF;
+  font-weight: 600;
+  line-height: 1.45;
 }
 
 /* Call to action at bottom of cases */
@@ -1186,12 +1195,7 @@ a {
             Receba um <span class="highlight">plano de ação</span> para atrair viajantes compradores, vender viagens de ticket alto e escalar os resultados da sua agência nos <span class="highlight">próximos 90 dias!</span>
           </h1>
 
-          <!-- Subheadline -->
-          <p class="subheadline">
-            Mais de 400 agências em 22 estados do país utilizam o Sistema de Captação Automática para vender todos os dias sem depender de indicação.
-          </p>
-
-          <!-- Social Proof Grid -->
+          <!-- Social Proof Grid (Nome das Empresas abaixo da Headline) -->
           <div class="social-proof-wrapper">
             <div class="social-proof-tag">Grandes agências que escalaram com o método</div>
             <div class="client-logos-grid">
@@ -1201,6 +1205,11 @@ a {
               <div class="client-badge"><span>BEFLY TRAVEL</span></div>
             </div>
           </div>
+
+          <!-- Subheadline -->
+          <p class="subheadline">
+            Mais de 400 agências em 22 estados do país utilizam o Sistema de Captação Automática para vender todos os dias sem depender de indicação.
+          </p>
         </div>
 
         <!-- Right Column: Strategic Conversion Form -->
@@ -1320,7 +1329,7 @@ a {
           <!-- Straight Line Carousel Track -->
           <div class="cases-carousel-track" id="casesTrack">
             <!-- Case 1: CVC -->
-            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/01%20(1).mp4" data-video-title="CVC - Case de Sucesso">
+            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/01%20(1).mp4" data-video-title="Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/01%20(1).mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -1330,13 +1339,12 @@ a {
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">CVC</h3>
                 <p class="case-desc">Escala de vendas e novos viajantes qualificados</p>
               </div>
             </article>
 
             <!-- Case 2: Azul Viagens -->
-            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/03.mp4" data-video-title="Azul Viagens - Case de Sucesso">
+            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/03.mp4" data-video-title="Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/03.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -1346,13 +1354,12 @@ a {
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Azul Viagens</h3>
                 <p class="case-desc">Previsibilidade e fechamento de roteiros internacionais</p>
               </div>
             </article>
 
             <!-- Case 3: MF Viagens -->
-            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/04%20-%20Miriam.mp4" data-video-title="MF Viagens - Case de Sucesso">
+            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/04%20-%20Miriam.mp4" data-video-title="Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/04%20-%20Miriam.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -1362,13 +1369,12 @@ a {
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">MF Viagens</h3>
                 <p class="case-desc">Fim dos curiosos e fechamento de pacotes no WhatsApp</p>
               </div>
             </article>
 
             <!-- Case 4: FlyWorld -->
-            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/05.mp4" data-video-title="FlyWorld - Case de Sucesso">
+            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/05.mp4" data-video-title="Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/05.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -1378,13 +1384,12 @@ a {
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">FlyWorld</h3>
                 <p class="case-desc">Atração de viajantes de alto poder aquisitivo</p>
               </div>
             </article>
 
             <!-- Case 5: Befly Travel -->
-            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/07.mp4" data-video-title="Befly Travel - Case de Sucesso">
+            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/07.mp4" data-video-title="Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/07.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -1394,13 +1399,12 @@ a {
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Befly Travel</h3>
                 <p class="case-desc">Crescimento contínuo em pacotes completos em família</p>
               </div>
             </article>
 
             <!-- Case 6: Michelle Turismo -->
-            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/09%20-%20Michelle.mp4" data-video-title="Michelle Turismo - Case de Sucesso">
+            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/09%20-%20Michelle.mp4" data-video-title="Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/09%20-%20Michelle.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -1410,13 +1414,12 @@ a {
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Michelle Turismo</h3>
                 <p class="case-desc">Vendas constantes de pacotes e viagens de ticket alto</p>
               </div>
             </article>
 
             <!-- Case 7: Vayu Viagens -->
-            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/10%20-%20Vayu.mp4" data-video-title="Vayu Viagens - Case de Sucesso">
+            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/10%20-%20Vayu.mp4" data-video-title="Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/10%20-%20Vayu.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -1426,13 +1429,12 @@ a {
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Vayu Viagens</h3>
                 <p class="case-desc">Experiências exclusivas e roteiros sob medida</p>
               </div>
             </article>
 
             <!-- Case 8: Hadassa Turismo -->
-            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/11.mp4" data-video-title="Hadassa Turismo - Case de Sucesso">
+            <article class="case-card" data-video-src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/11.mp4" data-video-title="Case de Sucesso">
               <div class="video-thumb-container">
                 <video src="https://media.githubusercontent.com/media/Domingues167/lpmauro/main/11.mp4#t=1.5" preload="metadata" muted playsinline></video>
                 <div class="play-overlay">
@@ -1442,7 +1444,6 @@ a {
                 </div>
               </div>
               <div class="case-info">
-                <h3 class="case-company">Hadassa Turismo</h3>
                 <p class="case-desc">Aceleração de faturamento com captação automática</p>
               </div>
             </article>
