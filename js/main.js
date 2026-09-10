@@ -497,9 +497,10 @@ function initVideoModal() {
   caseCards.forEach(card => {
     card.addEventListener('click', () => {
       const src = card.getAttribute('data-video-src') || card.getAttribute('data-video');
-      const title = card.getAttribute('data-video-title') || card.querySelector('.case-company')?.textContent || 'Depoimento';
+      const title = card.getAttribute('data-video-title') || 'Case de Sucesso';
+      const poster = card.getAttribute('data-video-poster') || '';
       if (src) {
-        openVideo(src, title);
+        openVideo(src, title, poster);
       }
     });
   });

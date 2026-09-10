@@ -163,21 +163,29 @@ a {
   gap: 28px;
 }
 
-.logo-wrapper {
-  margin-bottom: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
+
+
+.brand-wrapper {
+  margin-bottom: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+}
+
+.brand-logo-container {
+  max-width: 95px !important;
+  width: 95px !important;
+  display: block !important;
 }
 
 .brand-logo-img {
-  max-width: 140px;
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.6));
+  max-width: 95px !important;
+  width: 95px !important;
+  height: auto !important;
+  display: block !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.6)) !important;
 }
 
 .method-tag {
