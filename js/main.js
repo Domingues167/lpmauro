@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPhoneMask();
   initFormHandler();
   initCasesCarousel();
-  initVideoModal();
+  initInlineVideoPlayers();
   initLegalModals();
 });
 
@@ -125,6 +125,24 @@ function initPhoneMask() {
    ========================================================================== */
 
 const TARGET_WHATSAPP_NUMBER = '5511966097451';
+const CRM_WEBHOOK_URL = 'https://app.crmpeople.com.br/integrations/generic_webhook/hook/wLA6dl8Sj1yLzLHPRPmn3lHMExasI6-P';
+
+async function sendLeadToCrm(payload) {
+  try {
+    const res = await fetch(CRM_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload),
+      keepalive: true
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn('Erro ao enviar para webhook CRM:', err);
+    return false;
+  }
+}
 
 function formatWhatsAppMessage(data) {
   const name = (data.name || '').trim() || 'Cliente';
@@ -148,7 +166,7 @@ function initFormHandler() {
   const submitBtn = document.getElementById('submitButton');
   if (!form || !submitBtn) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // Basic Validation
@@ -170,11 +188,34 @@ function initFormHandler() {
       return;
     }
 
+    // Button loading state
+    submitBtn.classList.add('loading');
+
     // Build payload
     const formData = new FormData(form);
     const leadPayload = {};
     formData.forEach((val, key) => { leadPayload[key] = val; });
     leadPayload['submitted_at'] = new Date().toISOString();
+
+    // CRM Payload mapping
+    const crmPayload = {
+      nome: name,
+      name: name,
+      telefone: rawPhone,
+      whatsapp: whatsapp,
+      phone: rawPhone,
+      instagram: instagram,
+      faturamento: faturamento,
+      vendedores: vendedores,
+      utm_source: leadPayload['utm_source'] || '',
+      utm_medium: leadPayload['utm_medium'] || '',
+      utm_campaign: leadPayload['utm_campaign'] || '',
+      utm_term: leadPayload['utm_term'] || '',
+      utm_content: leadPayload['utm_content'] || '',
+      origem: 'Sistema de Captação Automática ™️',
+      pagina: window.location.href,
+      data_envio: new Date().toISOString()
+    };
 
     // Build WhatsApp URL with formatted structured message
     const message = formatWhatsAppMessage(leadPayload);
@@ -189,13 +230,29 @@ function initFormHandler() {
       sessionStorage.setItem('whatsapp_message', message);
     } catch(err) {}
 
-    // Button loading state
-    submitBtn.classList.add('loading');
+    // Fire Meta Pixel Lead event
+    try {
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', {
+          content_name: 'Plano Estratégico',
+          currency: 'BRL',
+          value: 0
+        });
+      }
+    } catch(err) {}
 
-    // Redirect to WhatsApp with pre-filled message
-    setTimeout(() => {
-      window.location.href = whatsappUrl;
-    }, 600);
+    // Send to CRM Webhook with 1.2s timeout so redirect is never blocked
+    try {
+      await Promise.race([
+        sendLeadToCrm(crmPayload),
+        new Promise(resolve => setTimeout(resolve, 1200))
+      ]);
+    } catch (err) {
+      console.warn('Timeout ao enviar para o CRM:', err);
+    }
+
+    // Redirect to Obrigado page
+    window.location.href = 'https://arocketx.com/obrigado';
   });
 }
 
@@ -392,8 +449,11 @@ function initCasesCarousel() {
   }
 
   function resumeAutoplay() {
-    const modal = document.getElementById('videoModal');
-    if (!modal || !modal.classList.contains('active')) {
+    const anyPlaying = cards.some(c => {
+      const v = c.querySelector('video');
+      return v && !v.paused && !v.ended;
+    });
+    if (!anyPlaying) {
       isCarouselPaused = false;
     }
   }
@@ -431,94 +491,122 @@ function initCasesCarousel() {
 }
 
 /* ==========================================================================
-   5. VIDEO TESTIMONIAL MODAL (HTML5 & PANDA SUPPORT)
+   5. INLINE VIDEO PLAYERS (DIRETO NO PLAYER DO SITE)
    ========================================================================== */
 
-function initVideoModal() {
-  const modal = document.getElementById('videoModal');
-  const modalVideoPlayer = document.getElementById('modalVideoPlayer');
-  const modalVideoIframe = document.getElementById('modalVideoIframe');
-  const modalTitle = document.getElementById('modalVideoTitle');
-  const closeBtn = document.getElementById('modalCloseBtn');
-  const caseCards = document.querySelectorAll('.case-card[data-video-src], .case-card[data-video]');
+function initInlineVideoPlayers() {
+  const track = document.getElementById('casesTrack');
+  if (!track) return;
 
-  if (!modal) return;
+  const cards = Array.from(track.querySelectorAll('.case-card'));
 
-  function openVideo(src, title) {
-    isCarouselPaused = true; // Pause carousel while video is playing
+  cards.forEach(card => {
+    const video = card.querySelector('video');
+    if (!video) return;
 
-    if (modalTitle) {
-      modalTitle.textContent = title || 'Depoimento de Sucesso';
+    function playThisCard() {
+      // Pause all other video players
+      cards.forEach(otherCard => {
+        if (otherCard !== card) {
+          const otherVideo = otherCard.querySelector('video');
+          if (otherVideo && !otherVideo.paused) {
+            otherVideo.pause();
+          }
+          otherCard.classList.remove('is-playing');
+        }
+      });
+
+      // Pause carousel autoplay while watching
+      isCarouselPaused = true;
+
+      // Start playing inline inside this card
+      card.classList.add('is-playing');
+      video.controls = true;
+
+      const primarySrc = card.getAttribute('data-video-src');
+      const fallbackSrc = card.getAttribute('data-fallback-src');
+
+      if (!video.src && (!video.currentSrc || video.currentSrc === '')) {
+        if (primarySrc) {
+          video.src = primarySrc;
+        }
+        video.load();
+      }
+
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(err => {
+          console.warn('Playback error, trying fallback/reload:', err);
+          if (fallbackSrc && video.src !== fallbackSrc) {
+            video.src = fallbackSrc;
+            video.load();
+            video.play().catch(e => console.warn('Fallback playback error:', e));
+          } else {
+            video.load();
+            video.play().catch(e => console.warn('Reload playback error:', e));
+          }
+        });
+      }
     }
 
-    // Check if it's an external embed iframe (YouTube, Vimeo, Panda) or a direct video file (.mp4, .mov)
-    const isEmbedIframe = src.includes('pandavideo') || src.includes('youtube.com') || src.includes('youtu.be') || src.includes('vimeo.com');
-
-    if (isEmbedIframe) {
-      if (modalVideoPlayer) {
-        modalVideoPlayer.pause();
-        modalVideoPlayer.style.display = 'none';
-        modalVideoPlayer.src = '';
-      }
-      if (modalVideoIframe) {
-        modalVideoIframe.style.display = 'block';
-        modalVideoIframe.src = src.includes('autoplay') ? src : `${src}&autoplay=true`;
-      }
-    } else {
-      // Direct video (.mp4 or .mov from local disk or CDN)
-      if (modalVideoIframe) {
-        modalVideoIframe.style.display = 'none';
-        modalVideoIframe.src = '';
-      }
-      if (modalVideoPlayer) {
-        modalVideoPlayer.style.display = 'block';
-        modalVideoPlayer.src = src;
-        modalVideoPlayer.play().catch(() => {});
-      }
-    }
-
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeVideo() {
-    modal.classList.remove('active');
-    if (modalVideoPlayer) {
-      modalVideoPlayer.pause();
-      modalVideoPlayer.src = '';
-    }
-    if (modalVideoIframe) {
-      modalVideoIframe.src = '';
-    }
-    document.body.style.overflow = '';
-    isCarouselPaused = false; // Resume carousel
-  }
-
-  caseCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const src = card.getAttribute('data-video-src') || card.getAttribute('data-video');
-      const title = card.getAttribute('data-video-title') || 'Case de Sucesso';
-      const poster = card.getAttribute('data-video-poster') || '';
-      if (src) {
-        openVideo(src, title, poster);
+    video.addEventListener('error', () => {
+      const fallbackSrc = card.getAttribute('data-fallback-src');
+      if (fallbackSrc && video.src !== fallbackSrc) {
+        console.warn('Video load error, switching to fallback:', fallbackSrc);
+        video.src = fallbackSrc;
+        video.load();
+        video.play().catch(e => console.warn('Fallback playback error:', e));
       }
     });
-  });
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeVideo);
-  }
+    card.addEventListener('click', (e) => {
+      // If clicking directly on native controls of the playing video, let browser handle it
+      if (card.classList.contains('is-playing') && e.target === video) {
+        return;
+      }
+      // If user is currently dragging the carousel track, ignore
+      if (track.classList.contains('grabbing')) {
+        return;
+      }
+      if (!card.classList.contains('is-playing')) {
+        e.preventDefault();
+        playThisCard();
+      }
+    });
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      closeVideo();
-    }
-  });
+    video.addEventListener('play', () => {
+      card.classList.add('is-playing');
+      video.controls = true;
+      isCarouselPaused = true;
+      cards.forEach(otherCard => {
+        if (otherCard !== card) {
+          const otherVideo = otherCard.querySelector('video');
+          if (otherVideo && !otherVideo.paused) {
+            otherVideo.pause();
+          }
+          otherCard.classList.remove('is-playing');
+        }
+      });
+    });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      closeVideo();
-    }
+    video.addEventListener('pause', () => {
+      // Resume autoplay after 4 seconds if no video is playing
+      setTimeout(() => {
+        const anyPlaying = cards.some(c => {
+          const v = c.querySelector('video');
+          return v && !v.paused && !v.ended;
+        });
+        if (!anyPlaying) {
+          isCarouselPaused = false;
+        }
+      }, 4000);
+    });
+
+    video.addEventListener('ended', () => {
+      card.classList.remove('is-playing');
+      video.controls = false;
+      isCarouselPaused = false;
+    });
   });
 }
 

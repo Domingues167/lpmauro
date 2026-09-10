@@ -6,14 +6,15 @@ Landing page de alta conversão desenvolvida para **Agências de Viagens e Consu
 
 ## 🚀 Principais Recursos
 - **Design Moderno:** Identidade visual premium em Azul Elétrico / Royal Blue (`#0066FF`), glassmorphism e tipografia Plus Jakarta Sans.
-- **Carrossel em Linha Reta:** 8 vídeos reais de depoimentos passando continuamente em carrossel horizontal com autoplay, suporte a arrastar com mouse/touch e pausa inteligente.
+- **Carrossel em Linha Reta & Player Inline:** 10 vídeos reais de depoimentos passando continuamente em carrossel horizontal com autoplay, suporte a arrastar e reprodução instantânea **direto no player do site** (inline, sem popups ou modais).
 - **Captura Qualificada de Leads:**
   - Nome completo
   - WhatsApp com máscara e DDD
   - Instagram da agência
   - Faturamento atual
   - Quantidade de vendedores na equipe
-- **Integração WhatsApp (11 96609-7451):** Envio instantâneo dos dados formatados para atendimento imediato.
+- **Integração CRM People (Webhook):** Disparo automático de todos os dados do lead (nome, telefone, whatsapp, instagram, faturamento, vendedores, UTMs de campanha, página e timestamp) diretamente para o CRM People via Generic Webhook.
+- **Integração WhatsApp (11 96609-7451):** Redirecionamento instantâneo com mensagem formatada para atendimento humano imediato.
 - **Versão WordPress Pronta:** Arquivo único com todo o CSS, JS e imagens embutidas em Base64 para uso direto no Elementor ou bloco HTML do Gutenberg.
 
 ---
